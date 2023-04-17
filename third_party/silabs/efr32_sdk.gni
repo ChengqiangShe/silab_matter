@@ -391,9 +391,11 @@ template("efr32_sdk") {
         "${efr32_sdk_root}/platform/service/device_init/config/s2/",
         "${efr32_sdk_root}/platform/emdrv/spidrv/inc",
       ]
-      _include_dirs += [
-      "${efr32_sdk_change}/rail_util_built_in_phys/efr32xg24",
-      ]
+      if (silabs_board == "BRD4186C") {
+        _include_dirs += [
+        "${efr32_sdk_change}/rail_util_built_in_phys/efr32xg24",
+        ]
+      }
       libs += [
         "${sdk_support_root}/protocol/bluetooth/lib/EFR32MG24/GCC/libapploader.a",
         "${sdk_support_root}/protocol/bluetooth/lib/EFR32MG24/GCC/libbluetooth.a",
@@ -877,13 +879,15 @@ template("efr32_sdk") {
         "${efr32_sdk_root}/util/third_party/freertos/kernel/portable/GCC/ARM_CM33_NTZ/non_secure/port.c",
         "${efr32_sdk_root}/util/third_party/freertos/kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c",
       ]
-      sources += [
-        "${efr32_sdk_change}/rail_util_built_in_phys/sl_rail_phy_overrides.c",
-        "${efr32_sdk_change}/rail_util_built_in_phys/efr32xg24/sl_rail_ble_config_38M4Hz.c",
-        "${efr32_sdk_change}/rail_util_built_in_phys/efr32xg24/sl_rail_ieee802154_config_38M4Hz.c",
-        "${efr32_sdk_change}/rail_util_built_in_phys/efr32xg24/sl_rail_ble_config_39MHz.c",
-        "${efr32_sdk_change}/rail_util_built_in_phys/efr32xg24/sl_rail_ieee802154_config_39MHz.c",
-      ]
+      if (silabs_board == "BRD4186C") {
+        sources += [
+          "${efr32_sdk_change}/rail_util_built_in_phys/sl_rail_phy_overrides.c",
+          "${efr32_sdk_change}/rail_util_built_in_phys/efr32xg24/sl_rail_ble_config_38M4Hz.c",
+          "${efr32_sdk_change}/rail_util_built_in_phys/efr32xg24/sl_rail_ieee802154_config_38M4Hz.c",
+          "${efr32_sdk_change}/rail_util_built_in_phys/efr32xg24/sl_rail_ble_config_39MHz.c",
+          "${efr32_sdk_change}/rail_util_built_in_phys/efr32xg24/sl_rail_ieee802154_config_39MHz.c",
+        ]
+      }
     } else if (silabs_family == "mgm24") {
       sources += [
         "${efr32_sdk_root}/platform/Device/SiliconLabs/MGM24/Source/startup_mgm24.c",

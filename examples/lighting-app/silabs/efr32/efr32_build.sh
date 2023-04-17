@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#source third_party/connectedhomeip/scripts/activate.sh
+source third_party/connectedhomeip/scripts/activate.sh
 export silabs_board=BRD4186C
 # export silabs_board=BRD4187C
 gn gen out/debug

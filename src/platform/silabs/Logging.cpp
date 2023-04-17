@@ -178,7 +178,7 @@ extern "C" void silabsInitLog(void)
 #if SILABS_LOG_ENABLED
 
 #ifdef ENABLE_UART_LOGGING
-    tuya_log_uart_init();
+    //tuya_log_uart_init();
 #else
 
 #if LOG_RTT_BUFFER_INDEX != 0
@@ -565,6 +565,7 @@ extern "C" void RAILCb_AssertFailed(RAIL_Handle_t railHandle, uint32_t errorCode
     SILABS_LOG("RAIL Assert : %ld", errorCode);
 #endif
 
+    // NVIC_SystemReset();
     while (1)
         ;
 }

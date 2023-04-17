@@ -24,7 +24,7 @@
 // <h> EUSART settings
 // <o SL_UARTDRV_EUSART_VCOM_BAUDRATE> Baud rate
 // <i> Default: 115200
-#define SL_UARTDRV_EUSART_VCOM_BAUDRATE        115200
+#define SL_UARTDRV_EUSART_VCOM_BAUDRATE        115200 //921600 //
 
 // <o SL_UARTDRV_EUSART_VCOM_LF_MODE> Low frequency mode
 // <true=> True
@@ -52,7 +52,7 @@
 // <uartdrvFlowControlHw=> nRTS/nCTS hardware handshake
 // <uartdrvFlowControlHwUart=> UART peripheral controls nRTS/nCTS
 // <i> Default: uartdrvFlowControlHw
-#define SL_UARTDRV_EUSART_VCOM_FLOW_CONTROL_TYPE uartdrvFlowControlHwUart
+#define SL_UARTDRV_EUSART_VCOM_FLOW_CONTROL_TYPE uartdrvFlowControlNone //uartdrvFlowControlHwUart
 
 // <o SL_UARTDRV_EUSART_VCOM_OVERSAMPLING> Oversampling selection
 // <eusartOVS16=> 16x oversampling

@@ -29,10 +29,11 @@ declare_args() {
 
   # Build openthread with prebuilt silabs lib
   use_silabs_thread_lib = false
-  enable_openthread_cli = true
+  enable_openthread_cli = true #false #
 
   kvs_max_entries = 75
 
+  efr32_sdk_change = "${chip_root}/third_party/silabs/matter_sdk_change"
   # Use Silabs factory data provider example.
   # Users can implement their own.
   use_efr32_factory_data_provider = true
@@ -147,8 +148,10 @@ template("efr32_sdk") {
       "${efr32_sdk_root}/platform/security/sl_component/se_manager/src/",
       "${efr32_sdk_root}/util/third_party/freertos/cmsis/Include",
       "${efr32_sdk_root}/util/third_party/freertos/kernel/include",
-      "${sdk_support_root}/matter/efr32/${silabs_family}/${silabs_board}/config",
-      "${sdk_support_root}/matter/efr32/${silabs_family}/${silabs_board}/autogen",
+      # "${sdk_support_root}/matter/efr32/${silabs_family}/${silabs_board}/config",
+      # "${sdk_support_root}/matter/efr32/${silabs_family}/${silabs_board}/autogen",
+      "${efr32_sdk_change}/${silabs_family}/${silabs_board}/config",
+      "${efr32_sdk_change}/${silabs_family}/${silabs_board}/autogen",
     ]
 
     if (silabs_family != "mgm24") {
@@ -376,6 +379,9 @@ template("efr32_sdk") {
         "EFR32_SERIES2_CONFIG1_MICRO",
       ]
     } else if (silabs_family == "efr32mg24") {
+      print("$silabs_family") 
+      print("$silabs_mcu") 
+      
       _include_dirs += [
         "${efr32_sdk_root}/platform/Device/SiliconLabs/EFR32MG24/Include",
         "${efr32_sdk_root}/platform/radio/rail_lib/chip/efr32/efr32xg2x",
@@ -385,7 +391,9 @@ template("efr32_sdk") {
         "${efr32_sdk_root}/platform/service/device_init/config/s2/",
         "${efr32_sdk_root}/platform/emdrv/spidrv/inc",
       ]
-
+      _include_dirs += [
+      "${efr32_sdk_change}/rail_util_built_in_phys/efr32xg24",
+      ]
       libs += [
         "${sdk_support_root}/protocol/bluetooth/lib/EFR32MG24/GCC/libapploader.a",
         "${sdk_support_root}/protocol/bluetooth/lib/EFR32MG24/GCC/libbluetooth.a",
@@ -515,6 +523,7 @@ template("efr32_sdk") {
       "${efr32_sdk_root}/platform/emlib/src/em_se.c",
       "${efr32_sdk_root}/platform/emlib/src/em_system.c",
       "${efr32_sdk_root}/platform/emlib/src/em_timer.c",
+      #"${efr32_sdk_root}/platform/emlib/src/em_eusart.c",
       "${efr32_sdk_root}/platform/peripheral/src/peripheral_sysrtc.c",
       "${efr32_sdk_root}/platform/radio/rail_lib/plugin/pa-conversions/pa_conversions_efr32.c",
       "${efr32_sdk_root}/platform/radio/rail_lib/plugin/rail_util_pti/sl_rail_util_pti.c",
@@ -652,18 +661,23 @@ template("efr32_sdk") {
       "${efr32_sdk_root}/util/third_party/mbedtls/library/x509_csr.c",
       "${efr32_sdk_root}/util/third_party/mbedtls/library/x509write_crt.c",
       "${efr32_sdk_root}/util/third_party/mbedtls/library/x509write_csr.c",
-      "${sdk_support_root}/matter/efr32/${silabs_family}/${silabs_board}/autogen/gatt_db.c",
-      "${sdk_support_root}/matter/efr32/${silabs_family}/${silabs_board}/autogen/sl_bluetooth.c",
-      "${sdk_support_root}/matter/efr32/${silabs_family}/${silabs_board}/autogen/sl_board_default_init.c",
-      "${sdk_support_root}/matter/efr32/${silabs_family}/${silabs_board}/autogen/sl_device_init_clocks.c",
-      "${sdk_support_root}/matter/efr32/${silabs_family}/${silabs_board}/autogen/sl_event_handler.c",
+      "${efr32_sdk_change}/${silabs_family}/${silabs_board}/autogen/gatt_db.c",
+      "${efr32_sdk_change}/${silabs_family}/${silabs_board}/autogen/sl_bluetooth.c",
+      "${efr32_sdk_change}/${silabs_family}/${silabs_board}/autogen/sl_board_default_init.c",
+      "${efr32_sdk_change}/${silabs_family}/${silabs_board}/autogen/sl_device_init_clocks.c",
+      "${efr32_sdk_change}/${silabs_family}/${silabs_board}/autogen/sl_event_handler.c",
+      # "${sdk_support_root}/matter/efr32/${silabs_family}/${silabs_board}/autogen/gatt_db.c",
+      # "${sdk_support_root}/matter/efr32/${silabs_family}/${silabs_board}/autogen/sl_bluetooth.c",
+      # "${sdk_support_root}/matter/efr32/${silabs_family}/${silabs_board}/autogen/sl_board_default_init.c",
+      # "${sdk_support_root}/matter/efr32/${silabs_family}/${silabs_board}/autogen/sl_device_init_clocks.c",
+      # "${sdk_support_root}/matter/efr32/${silabs_family}/${silabs_board}/autogen/sl_event_handler.c",
     ]
 
     if (silabs_family != "mgm24") {
       sources +=
           [ "${efr32_sdk_root}/platform/radio/rail_lib/hal/efr32/hal_efr.c" ]
     }
-
+    print("buttons = $use_wstk_buttons")
     if (use_wstk_buttons) {
       sources += [
         "${efr32_sdk_root}/platform/driver/button/src/sl_button.c",
@@ -736,7 +750,8 @@ template("efr32_sdk") {
         "${efr32_sdk_root}/platform/emlib/src/em_eusart.c",
         "${efr32_sdk_root}/platform/emlib/src/em_leuart.c",
         "${efr32_sdk_root}/platform/emlib/src/em_usart.c",
-        "${sdk_support_root}/matter/efr32/${silabs_family}/${silabs_board}/autogen/sl_uartdrv_init.c",
+        "${efr32_sdk_change}/${silabs_family}/${silabs_board}/autogen/sl_uartdrv_init.c",
+        # "${sdk_support_root}/matter/efr32/${silabs_family}/${silabs_board}/autogen/sl_uartdrv_init.c",
       ]
 
       if (use_external_flash) {
@@ -861,6 +876,13 @@ template("efr32_sdk") {
         "${efr32_sdk_root}/protocol/bluetooth/src/sl_apploader_util_s2.c",
         "${efr32_sdk_root}/util/third_party/freertos/kernel/portable/GCC/ARM_CM33_NTZ/non_secure/port.c",
         "${efr32_sdk_root}/util/third_party/freertos/kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c",
+      ]
+      sources += [
+        "${efr32_sdk_change}/rail_util_built_in_phys/sl_rail_phy_overrides.c",
+        "${efr32_sdk_change}/rail_util_built_in_phys/efr32xg24/sl_rail_ble_config_38M4Hz.c",
+        "${efr32_sdk_change}/rail_util_built_in_phys/efr32xg24/sl_rail_ieee802154_config_38M4Hz.c",
+        "${efr32_sdk_change}/rail_util_built_in_phys/efr32xg24/sl_rail_ble_config_39MHz.c",
+        "${efr32_sdk_change}/rail_util_built_in_phys/efr32xg24/sl_rail_ieee802154_config_39MHz.c",
       ]
     } else if (silabs_family == "mgm24") {
       sources += [

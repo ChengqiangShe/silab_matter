@@ -45,7 +45,7 @@ chip_build_tests = false
 
 # Transitional CommissionableDataProvider not used anymore
 # examples/platform/silabs/efr32/EFR32DeviceDataProvider is now used.
-chip_use_transitional_commissionable_data_provider = false
+chip_use_transitional_commissionable_data_provider = false #true #
 
 openthread_root =
     "${chip_root}/third_party/silabs/gecko_sdk/util/third_party/openthread"

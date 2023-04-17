@@ -62,7 +62,10 @@
 #ifndef LOG_RTT_BUFFER_SIZE
 #define LOG_RTT_BUFFER_SIZE 256
 #endif
-
+#include "uartdrv.h"
+#include <stddef.h>
+#include "sl_uartdrv_eusart_vcom_config.h"
+#include "em_eusart.h"
 // FreeRTOS includes
 #include "SEGGER_RTT.h"
 #include "SEGGER_RTT_Conf.h"
@@ -84,6 +87,8 @@ static constexpr size_t kMaxCategoryStrLen = chip::MaxStringLength(LOG_ERROR, LO
 
 static constexpr size_t kMaxTimestampStrLen = 16; // "[" (HH)HH:MM:SS + "." + miliseconds(3digits) + "]"
 
+#define ENABLE_UART_LOGGING
+
 #if SILABS_LOG_ENABLED
 static bool sLogInitialized = false;
 #endif
@@ -91,6 +96,10 @@ static bool sLogInitialized = false;
 static uint8_t sLogBuffer[LOG_RTT_BUFFER_SIZE];
 static uint8_t sCmdLineBuffer[LOG_RTT_BUFFER_SIZE];
 #endif
+extern UARTDRV_Handle_t ty_uart_data_2;
+extern "C" void tuya_log_uart_init(void);
+extern "C" int16_t uartConsoleWrite(const char * Buf, uint16_t BufLength);
+#include <openthread/cli.h>
 
 #if SILABS_LOG_ENABLED
 
@@ -118,7 +127,10 @@ static size_t AddTimeStampAndPrefixStr(char * logBuffer, const char * prefix, si
     totalSeconds /= 60;
     uint8_t minutes = totalSeconds % 60;
     uint32_t hours  = totalSeconds / 60;
-
+    // if(minutes > 2)
+    // {
+    //     NVIC_SystemReset();
+    // }
     return snprintf(logBuffer, maxSize, "[%02lu:%02u:%02u.%03u]%s", hours, minutes, seconds, milliseconds, prefix);
 }
 
@@ -131,14 +143,26 @@ static void PrintLog(const char * msg)
     {
         size_t sz;
         sz = strlen(msg);
+#ifdef ENABLE_UART_LOGGING
+        //  UARTDRV_ForceTransmit(ty_uart_data_2, (uint8_t *) msg, sz);
+        uartConsoleWrite(msg, sz);
+#else
         SEGGER_RTT_WriteNoLock(LOG_RTT_BUFFER_INDEX, msg, sz);
+#endif
+
 #ifdef PW_RPC_ENABLED
         PigweedLogger::putString(msg, sz);
 #endif
 
         const char * newline = "\r\n";
         sz                   = strlen(newline);
+#ifdef ENABLE_UART_LOGGING
+        //  UARTDRV_ForceTransmit(ty_uart_data_2, (uint8_t *) newline, sz);
+        uartConsoleWrite(newline, sz);
+#else
         SEGGER_RTT_WriteNoLock(LOG_RTT_BUFFER_INDEX, newline, sz);
+#endif
+
 #ifdef PW_RPC_ENABLED
         PigweedLogger::putString(newline, sz);
 #endif
@@ -152,6 +176,11 @@ static void PrintLog(const char * msg)
 extern "C" void silabsInitLog(void)
 {
 #if SILABS_LOG_ENABLED
+
+#ifdef ENABLE_UART_LOGGING
+    tuya_log_uart_init();
+#else
+
 #if LOG_RTT_BUFFER_INDEX != 0
     SEGGER_RTT_ConfigUpBuffer(LOG_RTT_BUFFER_INDEX, LOG_RTT_BUFFER_NAME, sLogBuffer, LOG_RTT_BUFFER_SIZE,
                               SEGGER_RTT_MODE_NO_BLOCK_TRIM);
@@ -161,6 +190,9 @@ extern "C" void silabsInitLog(void)
 #else
     SEGGER_RTT_SetFlagsUpBuffer(LOG_RTT_BUFFER_INDEX, SEGGER_RTT_MODE_NO_BLOCK_TRIM);
 #endif
+
+#endif
+
 
 #ifdef PW_RPC_ENABLED
     PigweedLogger::init();

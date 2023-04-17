@@ -245,7 +245,8 @@ See http://www.FreeRTOS.org/RTOS-Cortex-M3-M4.html. */
     {                                                                                                                              \
         taskDISABLE_INTERRUPTS();                                                                                                  \
         printf("\nFREERTOS ASSERT ( %s )\n", #x);                                                                                  \
-        for (;;)                                                                                                                   \
+        printf("\n ###################################### %s(%d)-<%s>: \n", __FILE__, __LINE__, __FUNCTION__);                     \
+        /*for (;;) */                                                                                                              \
             ;                                                                                                                      \
     }
 #define configASSERTNULL(x)                                                                                                        \

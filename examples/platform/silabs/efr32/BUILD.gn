@@ -21,7 +21,7 @@ import("${efr32_sdk_build_root}/efr32_sdk.gni")
 import("${efr32_sdk_build_root}/silabs_board.gni")
 
 declare_args() {
-  enable_heap_monitoring = false
+  enable_heap_monitoring = true  #false  #
 
   # OTA timeout in seconds
   OTA_periodic_query_timeout = 86400
@@ -259,7 +259,7 @@ source_set("efr32-common") {
   if (use_base_app) {
     sources += [ "BaseApplication.cpp" ]
   }
-
+  print("leds = $use_wstk_leds")
   if (use_wstk_leds) {
     sources += [ "LEDWidget.cpp" ]
   }

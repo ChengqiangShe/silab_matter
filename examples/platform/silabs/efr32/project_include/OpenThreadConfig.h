@@ -32,6 +32,11 @@
 // src/platform/silabs/Logging.cpp).
 #define OPENTHREAD_CONFIG_LOG_OUTPUT OPENTHREAD_CONFIG_LOG_OUTPUT_APP
 
+// #define OPENTHREAD_CONFIG_LOG_LEVEL  OT_LOG_LEVEL_DEBG //OT_LOG_LEVEL_CRIT //OT_LOG_LEVEL_INFO  // OT_LOG_LEVEL_NOTE //OT_LOG_LEVEL_INFO //
+// #define OPENTHREAD_CONFIG_LOG_PREPEND_LEVELs 1
+// #define RADIO_CONFIG_DEBUG_COUNTERS_SUPPORT 1
+
+
 // Turn on a moderate level of logging in OpenThread
 // Enable use of external heap allocator (calloc/free) for OpenThread.
 #define OPENTHREAD_CONFIG_HEAP_EXTERNAL_ENABLE 1

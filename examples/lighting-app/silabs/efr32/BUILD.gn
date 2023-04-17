@@ -43,7 +43,7 @@ import("${examples_plat_dir}/args.gni")
 
 declare_args() {
   # Dump memory usage at link time.
-  chip_print_memory_usage = false
+  chip_print_memory_usage = false #true #
 }
 
 efr32_sdk("sdk") {
@@ -150,8 +150,12 @@ efr32_executable("lighting_app") {
     ]
   }
 
-  ldscript = "${examples_plat_dir}/ldscripts/${silabs_family}.ld"
-
+ if (silabs_board == "BRD4186C") {
+    ldscript = "${examples_plat_dir}/ldscripts/efr32mg24a020f1536.ld"
+  } else{
+    ldscript = "${examples_plat_dir}/ldscripts/${silabs_family}.ld"
+  }
+  
   inputs = [ ldscript ]
 
   ldflags = [ "-T" + rebase_path(ldscript, root_build_dir) ]

@@ -41,19 +41,19 @@ void MemMonitoring::startHeapMonitoring()
 void MemMonitoring::HeapMonitoring(void * pvParameter)
 {
 
-    UBaseType_t appTaskValue;
-    UBaseType_t bleEventTaskValue;
-    UBaseType_t bleTaskValue;
-    UBaseType_t linkLayerTaskValue;
-    UBaseType_t openThreadTaskValue;
-    UBaseType_t eventLoopTaskValue;
+    // UBaseType_t appTaskValue;
+    // UBaseType_t bleEventTaskValue;
+    // UBaseType_t bleTaskValue;
+    // UBaseType_t linkLayerTaskValue;
+    // UBaseType_t openThreadTaskValue;
+    // UBaseType_t eventLoopTaskValue;
 
-    TaskHandle_t eventLoopHandleStruct = xTaskGetHandle(CHIP_DEVICE_CONFIG_CHIP_TASK_NAME);
-    TaskHandle_t otTaskHandle          = xTaskGetHandle(CHIP_DEVICE_CONFIG_THREAD_TASK_NAME);
-    TaskHandle_t appTaskHandle         = xTaskGetHandle(APP_TASK_NAME);
-    TaskHandle_t bleStackTaskHandle    = xTaskGetHandle(BLE_STACK_TASK_NAME);
-    TaskHandle_t bleLinkTaskHandle     = xTaskGetHandle(BLE_LINK_TASK_NAME);
-    TaskHandle_t bleEventTaskHandle    = xTaskGetHandle(CHIP_DEVICE_CONFIG_BLE_APP_TASK_NAME);
+    // TaskHandle_t eventLoopHandleStruct = xTaskGetHandle(CHIP_DEVICE_CONFIG_CHIP_TASK_NAME);
+    // TaskHandle_t otTaskHandle          = xTaskGetHandle(CHIP_DEVICE_CONFIG_THREAD_TASK_NAME);
+    // TaskHandle_t appTaskHandle         = xTaskGetHandle(APP_TASK_NAME);
+    // TaskHandle_t bleStackTaskHandle    = xTaskGetHandle(BLE_STACK_TASK_NAME);
+    // TaskHandle_t bleLinkTaskHandle     = xTaskGetHandle(BLE_LINK_TASK_NAME);
+    // TaskHandle_t bleEventTaskHandle    = xTaskGetHandle(CHIP_DEVICE_CONFIG_BLE_APP_TASK_NAME);
 
 #if CHIP_SYSTEM_CONFIG_USE_LWIP
     UBaseType_t lwipTaskValue;
@@ -62,34 +62,34 @@ void MemMonitoring::HeapMonitoring(void * pvParameter)
 
     while (true)
     {
-        appTaskValue        = uxTaskGetStackHighWaterMark(appTaskHandle);
-        bleEventTaskValue   = uxTaskGetStackHighWaterMark(bleEventTaskHandle);
-        bleTaskValue        = uxTaskGetStackHighWaterMark(bleStackTaskHandle);
-        linkLayerTaskValue  = uxTaskGetStackHighWaterMark(bleLinkTaskHandle);
-        openThreadTaskValue = uxTaskGetStackHighWaterMark(otTaskHandle);
-        eventLoopTaskValue  = uxTaskGetStackHighWaterMark(eventLoopHandleStruct);
+        // appTaskValue        = uxTaskGetStackHighWaterMark(appTaskHandle);
+        // bleEventTaskValue   = uxTaskGetStackHighWaterMark(bleEventTaskHandle);
+        // bleTaskValue        = uxTaskGetStackHighWaterMark(bleStackTaskHandle);
+        // linkLayerTaskValue  = uxTaskGetStackHighWaterMark(bleLinkTaskHandle);
+        // openThreadTaskValue = uxTaskGetStackHighWaterMark(otTaskHandle);
+        // eventLoopTaskValue  = uxTaskGetStackHighWaterMark(eventLoopHandleStruct);
 #if CHIP_SYSTEM_CONFIG_USE_LWIP
         lwipTaskValue = uxTaskGetStackHighWaterMark(lwipHandle);
 #endif // CHIP_SYSTEM_CONFIG_USE_LWIP
 
         SILABS_LOG("=============================");
-        SILABS_LOG("     ");
-        SILABS_LOG("Largest Block allocated              0x%x", largestBlockAllocated);
-        SILABS_LOG("Number Of Successful Alloc           0x%x", nbAllocSuccess);
-        SILABS_LOG("Number Of Successful Frees           0x%x", nbFreeSuccess);
-        SILABS_LOG("     ");
-        SILABS_LOG("App Task most bytes ever Free         0x%x", (appTaskValue * 4));
-        SILABS_LOG("BLE Event most bytes ever Free        0x%x", (bleEventTaskValue * 4));
-        SILABS_LOG("BLE Stack most bytes ever Free        0x%x", (bleTaskValue * 4));
-        SILABS_LOG("Link Layer Task most bytes ever Free  0x%x", (linkLayerTaskValue * 4));
-        SILABS_LOG("OpenThread Task most bytes ever Free  0x%x", (openThreadTaskValue * 4));
-        SILABS_LOG("Event Loop Task most bytes ever Free  0x%x", (eventLoopTaskValue * 4));
+        // SILABS_LOG("     ");
+        // SILABS_LOG("Largest Block allocated              0x%x", largestBlockAllocated);
+        // SILABS_LOG("Number Of Successful Alloc           0x%x", nbAllocSuccess);
+        // SILABS_LOG("Number Of Successful Frees           0x%x", nbFreeSuccess);
+        // SILABS_LOG("     ");
+        // SILABS_LOG("App Task most bytes ever Free         0x%x", (appTaskValue * 4));
+        // SILABS_LOG("BLE Event most bytes ever Free        0x%x", (bleEventTaskValue * 4));
+        // SILABS_LOG("BLE Stack most bytes ever Free        0x%x", (bleTaskValue * 4));
+        // SILABS_LOG("Link Layer Task most bytes ever Free  0x%x", (linkLayerTaskValue * 4));
+        // SILABS_LOG("OpenThread Task most bytes ever Free  0x%x", (openThreadTaskValue * 4));
+        // SILABS_LOG("Event Loop Task most bytes ever Free  0x%x", (eventLoopTaskValue * 4));
 #if CHIP_SYSTEM_CONFIG_USE_LWIP
         SILABS_LOG("LWIP Task most bytes ever Free        0x%x", (lwipTaskValue * 4));
 #endif // CHIP_SYSTEM_CONFIG_USE_LWIP
-        SILABS_LOG("     ");
-        SILABS_LOG("=============================");
-        vTaskDelay(pdMS_TO_TICKS(5000));
+        // SILABS_LOG("     ");
+        // SILABS_LOG("=============================");
+        vTaskDelay(pdMS_TO_TICKS(10000));
     }
 }
 

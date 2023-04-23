@@ -103,13 +103,19 @@ if (silabs_board == "BRD4304A") {
 } else if (silabs_board == "BRD4186A" || silabs_board == "BRD4187A") {
   print("RevA is deprecated, We suggest using BRD4186C (rev C)")
   silabs_family = "efr32mg24"
-  silabs_mcu = "EFR32MG24A010F1536GM48"
+  silabs_mcu = "EFR32MG24A020F1536IM48"
 } else if (silabs_board == "BRD4186C") {
   silabs_family = "efr32mg24"
   silabs_mcu = "EFR32MG24A020F1536IM40"
 } else if (silabs_board == "BRD4187C") {
   silabs_family = "efr32mg24"
   silabs_mcu = "EFR32MG24B220F1536IM48"
+} else if (silabs_board == "BRD4187B") {
+  silabs_family = "efr32mg24"
+  silabs_mcu = "EFR32MG24B020F1536IM48"
+} else if (silabs_board == "BRD4187C_40M") {
+  silabs_family = "efr32mg24"
+  silabs_mcu = "EFR32MG24B020F1536IM40"
 } else if (silabs_board == "BRD2601B") {
   silabs_family = "efr32mg24"
   silabs_mcu = "EFR32MG24B310F1536IM48"

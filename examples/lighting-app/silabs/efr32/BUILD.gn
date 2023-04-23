@@ -152,7 +152,9 @@ efr32_executable("lighting_app") {
 
  if (silabs_board == "BRD4186C") {
     ldscript = "${examples_plat_dir}/ldscripts/efr32mg24a020f1536.ld"
-  } else{
+  }else if (silabs_board == "BRD4187C_40M") {
+    ldscript = "${examples_plat_dir}/ldscripts/efr32mg24B020f1536.ld"
+  }else{
     ldscript = "${examples_plat_dir}/ldscripts/${silabs_family}.ld"
   }
   

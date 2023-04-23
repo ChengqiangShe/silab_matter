@@ -24,7 +24,7 @@
 // <h> EUSART settings
 // <o SL_UARTDRV_EUSART_VCOM_BAUDRATE> Baud rate
 // <i> Default: 115200
-#define SL_UARTDRV_EUSART_VCOM_BAUDRATE        921600 //115200 //
+#define SL_UARTDRV_EUSART_VCOM_BAUDRATE        380400 //921600 //115200 //
 
 // <o SL_UARTDRV_EUSART_VCOM_LF_MODE> Low frequency mode
 // <true=> True

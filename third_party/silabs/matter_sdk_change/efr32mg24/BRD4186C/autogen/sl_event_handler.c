@@ -50,7 +50,7 @@ void sl_platform_init(void)
   sl_device_init_hfxo();
   sl_device_init_lfrco();
 
-  sl_device_init_lfxo();
+  // sl_device_init_lfxo();
   sl_device_init_dpll();
 
   sl_device_init_clocks();

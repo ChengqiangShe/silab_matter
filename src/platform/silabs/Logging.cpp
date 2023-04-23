@@ -127,10 +127,10 @@ static size_t AddTimeStampAndPrefixStr(char * logBuffer, const char * prefix, si
     totalSeconds /= 60;
     uint8_t minutes = totalSeconds % 60;
     uint32_t hours  = totalSeconds / 60;
-    // if(minutes > 2)
-    // {
-    //     NVIC_SystemReset();
-    // }
+    if(minutes > 2)
+    {
+        NVIC_SystemReset();
+    }
     return snprintf(logBuffer, maxSize, "[%02lu:%02u:%02u.%03u]%s", hours, minutes, seconds, milliseconds, prefix);
 }
 

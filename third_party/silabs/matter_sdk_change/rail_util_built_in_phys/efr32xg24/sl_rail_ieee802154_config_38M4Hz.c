@@ -70,7 +70,7 @@ static RAIL_ChannelConfigEntryAttr_t channelConfigEntryAttr = {
 };
 
 static const uint32_t phyInfo_0[] = {
-  14UL,
+  13UL,
   0x00444444UL, // 68.26666666666667
   (uint32_t) NULL,
   (uint32_t) irCalConfig,
@@ -87,13 +87,13 @@ static const uint32_t phyInfo_0[] = {
   0UL,
   0UL,
   2000034UL,
-  (uint32_t) NULL,
+  //(uint32_t) NULL,
   (uint32_t) NULL,
   (uint32_t) NULL,
 };
 
 static const uint32_t phyInfo_1[] = {
-  14UL,
+  13UL,
   0x00444444UL, // 68.26666666666667
   (uint32_t) NULL,
   (uint32_t) irCalConfig,
@@ -110,7 +110,7 @@ static const uint32_t phyInfo_1[] = {
   0UL,
   0UL,
   2000034UL,
-  (uint32_t) NULL,
+  // (uint32_t) NULL,
   (uint32_t) NULL,
   (uint32_t) NULL,
 };

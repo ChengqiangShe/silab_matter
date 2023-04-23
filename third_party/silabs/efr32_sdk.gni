@@ -391,11 +391,11 @@ template("efr32_sdk") {
         "${efr32_sdk_root}/platform/service/device_init/config/s2/",
         "${efr32_sdk_root}/platform/emdrv/spidrv/inc",
       ]
-      if (silabs_board == "BRD4186C") {
+      # if (silabs_board == "BRD4186C") {
         _include_dirs += [
         "${efr32_sdk_change}/rail_util_built_in_phys/efr32xg24",
         ]
-      }
+      # }
       libs += [
         "${sdk_support_root}/protocol/bluetooth/lib/EFR32MG24/GCC/libapploader.a",
         "${sdk_support_root}/protocol/bluetooth/lib/EFR32MG24/GCC/libbluetooth.a",
@@ -684,7 +684,9 @@ template("efr32_sdk") {
       sources += [
         "${efr32_sdk_root}/platform/driver/button/src/sl_button.c",
         "${efr32_sdk_root}/platform/driver/button/src/sl_simple_button.c",
-        "${sdk_support_root}/matter/efr32/${silabs_family}/${silabs_board}/autogen/sl_simple_button_instances.c",
+        # "${sdk_support_root}/matter/efr32/${silabs_family}/${silabs_board}/autogen/sl_simple_button_instances.c",
+        "${efr32_sdk_change}/${silabs_family}/${silabs_board}/autogen/sl_simple_button_instances.c",
+        
       ]
     }
 
@@ -719,7 +721,8 @@ template("efr32_sdk") {
         "${efr32_sdk_root}/platform/driver/leddrv/src/sl_pwm_led.c",
         "${efr32_sdk_root}/platform/driver/leddrv/src/sl_simple_led.c",
         "${efr32_sdk_root}/platform/driver/leddrv/src/sl_simple_rgb_pwm_led.c",
-        "${sdk_support_root}/matter/efr32/${silabs_family}/${silabs_board}/autogen/sl_simple_led_instances.c",
+        # "${sdk_support_root}/matter/efr32/${silabs_family}/${silabs_board}/autogen/sl_simple_led_instances.c",
+        "${efr32_sdk_change}/${silabs_family}/${silabs_board}/autogen/sl_simple_led_instances.c",
       ]
     }
 
@@ -727,7 +730,8 @@ template("efr32_sdk") {
     if (defined(invoker.chip_enable_wifi) && invoker.chip_enable_wifi) {
       sources += [
         "${efr32_sdk_root}/platform/emdrv/spidrv/src/spidrv.c",
-        "${sdk_support_root}/matter/efr32/${silabs_family}/${silabs_board}/autogen/sl_spidrv_init.c",
+        # "${sdk_support_root}/matter/efr32/${silabs_family}/${silabs_board}/autogen/sl_spidrv_init.c",
+        "${efr32_sdk_change}/${silabs_family}/${silabs_board}/autogen/sl_spidrv_init.c",
       ]
     }
 
@@ -879,15 +883,17 @@ template("efr32_sdk") {
         "${efr32_sdk_root}/util/third_party/freertos/kernel/portable/GCC/ARM_CM33_NTZ/non_secure/port.c",
         "${efr32_sdk_root}/util/third_party/freertos/kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c",
       ]
-      if (silabs_board == "BRD4186C") {
+      # if (silabs_board == "BRD4186C") {
         sources += [
           "${efr32_sdk_change}/rail_util_built_in_phys/sl_rail_phy_overrides.c",
           "${efr32_sdk_change}/rail_util_built_in_phys/efr32xg24/sl_rail_ble_config_38M4Hz.c",
           "${efr32_sdk_change}/rail_util_built_in_phys/efr32xg24/sl_rail_ieee802154_config_38M4Hz.c",
           "${efr32_sdk_change}/rail_util_built_in_phys/efr32xg24/sl_rail_ble_config_39MHz.c",
           "${efr32_sdk_change}/rail_util_built_in_phys/efr32xg24/sl_rail_ieee802154_config_39MHz.c",
+          "${efr32_sdk_change}/rail_util_built_in_phys/efr32xg24/sl_rail_ble_config_40MHz.c",
+          "${efr32_sdk_change}/rail_util_built_in_phys/efr32xg24/sl_rail_ieee802154_config_40MHz.c",
         ]
-      }
+      # }
     } else if (silabs_family == "mgm24") {
       sources += [
         "${efr32_sdk_root}/platform/Device/SiliconLabs/MGM24/Source/startup_mgm24.c",
@@ -930,7 +936,7 @@ template("efr32_sdk") {
     }
 
     if (silabs_board == "BRD4186A" || silabs_board == "BRD4186C" ||
-        silabs_board == "BRD4187A" || silabs_board == "BRD4187C" ||
+        silabs_board == "BRD4187A" || silabs_board == "BRD4187C" ||  silabs_board == "BRD4187B" || silabs_board == "BRD4187C_40M" ||
         silabs_board == "BRD2704A") {
       sources += [ "${efr32_sdk_root}/platform/service/device_init/src/sl_device_init_dpll_s2.c" ]
     }
